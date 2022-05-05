@@ -18,6 +18,7 @@ public class StartMenu : MonoBehaviour
         List<string> options = new List<string>();
 
         //retrieves possible resolutions from machine and inputs 4:3 equivalent 
+        //we can change this so the game is 16:9, i just think 4:3 is ~artsy~
         int maxHeight = resolutions[resolutions.Length-1].height;
         if(maxHeight >= 480)
             options.Add("640x480");
