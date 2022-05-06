@@ -9,12 +9,11 @@ public class ThirdPersonController : MonoBehaviour
     //Movement speeds
     float speed;
 
-    //float gravity = 20f;
-
-    float walkSpeed = 1.5f;
-    float runSpeed = 3f;
-    float backSpeed = 1f;
-    float turnSpeed = 150f;
+    [Header("Movement Speeds")]
+    [SerializeField] private float walkSpeed = 1.5f;
+    [SerializeField] private float runSpeed = 3f;
+    [SerializeField] private float backSpeed = 1f;
+    [SerializeField] private float turnSpeed = 150f;
 
     float horizontalInput;
     float verticalInput;
@@ -78,18 +77,18 @@ public class ThirdPersonController : MonoBehaviour
         Vector3 turn = new Vector3(0,h,0);
         transform.Rotate(turn);
     }
+    
     private void ApplyNormalMovement() {
         float h = horizontalInput;
         float v = verticalInput;
 
-        Vector3 moveX = new Vector3(gameCamera.transform.right.x * h, 0, gameCamera.transform.right.z * h);
+        Vector3 moveX = new Vector3(gameCamera.transform.right.x * h,   0, gameCamera.transform.right.z * h);
         Vector3 moveZ = new Vector3(gameCamera.transform.forward.x * v, 0, gameCamera.transform.forward.z * v);
+        Vector3 move = moveX + moveZ;
+        move = Vector3.Normalize(move) * Time.deltaTime * speed;
         //moveZ is being problematic for cameras with weird angles
         //moveX seems to be working fine? not sure if math is perfect but it feels right
         //i will try to fix later
-
-        Vector3 move = moveX + moveZ;
-        move = Vector3.Normalize(move) * Time.deltaTime * speed;
 
         Vector3 moveTarget = new Vector3(move.x, 0, move.z);
         Transform lastCamPos = gameCamera.transform;
