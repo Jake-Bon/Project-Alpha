@@ -5,6 +5,7 @@ using UnityEngine;
 public class ThirdPersonController : MonoBehaviour
 {
     public bool tankControls = true;
+    public float gravity = 10.0f;
 
     float speed;
 
@@ -19,6 +20,7 @@ public class ThirdPersonController : MonoBehaviour
 
     //States
     bool isRunning;
+    bool isGrounded;
     
     Player player;
     CharacterController characterController;
@@ -37,6 +39,12 @@ public class ThirdPersonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGrounded = CheckIfGrounded();
+
+        if (!isGrounded) {
+            Fall();
+        }
+
         if (!player.stopInput) {
             HandleMovementInput();
 
@@ -99,5 +107,25 @@ public class ThirdPersonController : MonoBehaviour
         characterController.Move(move);
     }
 
+    private bool CheckIfGrounded() {
+        // Create layer mask that includes everything but the player
+        int layerMask = (1 << LayerMask.NameToLayer("Player"));
+        layerMask = ~layerMask;
 
+        Vector3 castPostition = gameObject.transform.position - new Vector3(0, 0.6f, 0.0f);
+
+        return Physics.CheckSphere(castPostition, 0.5f, layerMask);
+    }
+
+    private void Fall() {
+        float gravity = 5.0f;
+        float y = characterController.velocity.y;
+
+        y -= gravity * Time.deltaTime;
+
+        Vector3 fall = new Vector3(0, y, 0);
+
+        characterController.Move(fall);
+
+    }
 }
