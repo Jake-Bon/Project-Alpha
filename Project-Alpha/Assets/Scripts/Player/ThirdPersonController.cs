@@ -5,15 +5,14 @@ using UnityEngine;
 public class ThirdPersonController : MonoBehaviour
 {
     public bool tankControls = true;
-    
-    //Movement speeds
+
     float speed;
 
-    [Header("Movement Speeds")]
-    [SerializeField] private float walkSpeed = 1.5f;
-    [SerializeField] private float runSpeed = 3f;
-    [SerializeField] private float backSpeed = 1f;
-    [SerializeField] private float turnSpeed = 150f;
+    [Header("Movement Speed")]
+    [SerializeField] private float walkSpeed = 2.5f;
+    [SerializeField] private float runSpeed = 4.5f;
+    [SerializeField] private float backwardSpeed = 1.5f;
+    [SerializeField] private float turningSpeed = 150f;
 
     float horizontalInput;
     float verticalInput;
@@ -66,8 +65,8 @@ public class ThirdPersonController : MonoBehaviour
 
     private void ApplyTankMovement() {
         if (verticalInput < 0)
-            speed = backSpeed;
-        float h = horizontalInput * Time.deltaTime * turnSpeed;
+            speed = backwardSpeed;
+        float h = horizontalInput * Time.deltaTime * turningSpeed;
         float v = verticalInput * Time.deltaTime * speed;
         
         Vector3 move = new Vector3(0,0,v);
@@ -82,13 +81,10 @@ public class ThirdPersonController : MonoBehaviour
         float h = horizontalInput;
         float v = verticalInput;
 
-        Vector3 moveX = new Vector3(gameCamera.transform.right.x * h,   0, gameCamera.transform.right.z * h);
-        Vector3 moveZ = new Vector3(gameCamera.transform.forward.x * v, 0, gameCamera.transform.forward.z * v);
+        Vector3 moveX = new Vector3(gameCamera.transform.right.x * h, 0, gameCamera.transform.right.z * h);
+        Vector3 moveZ = new Vector3(gameCamera.transform.up.x * v, 0, gameCamera.transform.up.z * v);
         Vector3 move = moveX + moveZ;
         move = Vector3.Normalize(move) * Time.deltaTime * speed;
-        //moveZ is being problematic for cameras with weird angles
-        //moveX seems to be working fine? not sure if math is perfect but it feels right
-        //i will try to fix later
 
         Vector3 moveTarget = new Vector3(move.x, 0, move.z);
         Transform lastCamPos = gameCamera.transform;
@@ -98,7 +94,7 @@ public class ThirdPersonController : MonoBehaviour
             if(lastCamPos)
                 transform.rotation = Quaternion.RotateTowards(transform.rotation,
                         Quaternion.LookRotation(moveTarget),
-                        turnSpeed * 2 * Time.deltaTime);
+                        turningSpeed * 2 * Time.deltaTime);
         }
         characterController.Move(move);
     }
