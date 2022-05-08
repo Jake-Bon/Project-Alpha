@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Pathfinding : MonoBehaviour
 {
     NavMeshAgent agent;
-    public enum Behaviour {Patrol, Move, Follow, Stationary};
+    public Behaviour behaviour;
     public List<Transform> waypoints;
 
     // Start is called before the first frame update
@@ -20,6 +20,9 @@ public class Pathfinding : MonoBehaviour
             }
         }
         agent.destination = waypoints[0].transform.position;
+        if (behaviour == Behaviour.Stationary) {
+            Pause();
+        }
     }
 
     // Update is called once per frame
@@ -37,4 +40,6 @@ public class Pathfinding : MonoBehaviour
     public void Resume() {
         agent.isStopped = false;
     }
+
+    public enum Behaviour {Patrol, Move, Follow, Stationary};
 }

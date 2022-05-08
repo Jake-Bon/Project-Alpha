@@ -35,38 +35,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void CastRay() {
-        Vector3 look = player.position - gameObject.transform.position;
-        look.Normalize();
-
-        Debug.DrawRay(gameObject.transform.position, look * 15, Color.red, 0.1f, false);
-
-        int layerMask = (1 << LayerMask.NameToLayer("NPC"));
-        layerMask = ~layerMask;
-
-        RaycastHit hit;
-        if (Physics.Raycast(gameObject.transform.position, look, out hit, 15.0f, layerMask)) {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Player")) {
-                if (!isAlert) ToggleAlert();
-            } else {
-                if (isAlert) ToggleAlert();
-            }
-        } else if (isAlert) ToggleAlert();
-    }
-
     void ToggleAlert() {
         if (isAlert) {
             foreach (Renderer r in renderers) {
                 r.material = relaxedMaterial;
             }
             isAlert = false;
-            //pathfinding.Resume();
+            pathfinding.Resume();
         } else {
             foreach (Renderer r in renderers) {
                 r.material = alertMaterial;
             }
             isAlert = true;
-            //pathfinding.Pause();
+            pathfinding.Pause();
         }
     }
 }
