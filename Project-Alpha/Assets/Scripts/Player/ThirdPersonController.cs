@@ -14,6 +14,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float runSpeed = 4.5f;
     [SerializeField] private float backwardSpeed = 1.5f;
     [SerializeField] private float turningSpeed = 150f;
+    [SerializeField] private Transform spawnpoint;
 
     float horizontalInput;
     float verticalInput;
@@ -25,6 +26,7 @@ public class ThirdPersonController : MonoBehaviour
     Player player;
     CharacterController characterController;
     GameObject gameCamera;
+    Pathfinding child;
     
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,10 @@ public class ThirdPersonController : MonoBehaviour
 
         //probably need to change this later to work with dynamically changing cameras?
         gameCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        GameObject childTest = GameObject.Find("Child");
+        if(childTest!=null){
+            child = childTest.GetComponent<Pathfinding>();   
+        }  
     }
 
     // Update is called once per frame
@@ -52,6 +58,14 @@ public class ThirdPersonController : MonoBehaviour
                 ApplyTankMovement();
             else 
                 ApplyNormalMovement();
+        }
+
+        if(gameObject.transform.position.y<-3.0f){
+            Debug.Log("sdf");
+            transform.position = spawnpoint.position;
+            if(child!=null){
+                child.resetChild();
+            }
         }
 
     }
@@ -126,6 +140,5 @@ public class ThirdPersonController : MonoBehaviour
         Vector3 fall = new Vector3(0, y, 0);
 
         characterController.Move(fall);
-
     }
 }
