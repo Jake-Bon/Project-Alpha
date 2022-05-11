@@ -25,6 +25,7 @@ public class ThirdPersonController : MonoBehaviour
     
     Player player;
     CharacterController characterController;
+    GameObject[] gameCameraList;
     GameObject gameCamera;
     Pathfinding child;
     
@@ -34,8 +35,12 @@ public class ThirdPersonController : MonoBehaviour
         player = GetComponent<Player>();
         characterController = GetComponent<CharacterController>();
 
-        //probably need to change this later to work with dynamically changing cameras?
-        gameCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        gameCameraList = GameObject.FindGameObjectsWithTag("Camera");
+        foreach(GameObject cam in gameCameraList){
+                cam.SetActive(false);
+        }
+        gameCamera = gameCameraList[0];
+        gameCamera.SetActive(true);
         GameObject childTest = GameObject.Find("Child");
         if(childTest!=null){
             child = childTest.GetComponent<Pathfinding>();   
@@ -140,5 +145,11 @@ public class ThirdPersonController : MonoBehaviour
         Vector3 fall = new Vector3(0, y, 0);
 
         characterController.Move(fall);
+    }
+
+    public void ChangeCamera(int choice){
+        gameCamera.SetActive(false);
+        gameCamera = gameCameraList[choice];
+        gameCamera.SetActive(true);
     }
 }

@@ -457,11 +457,11 @@ GameObject:
   - component: {fileID: 607099974}
   m_Layer: 0
   m_Name: Main Camera (2)
-  m_TagString: MainCamera
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &607099973
 Transform:
   m_ObjectHideFlags: 0
@@ -664,6 +664,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375952fa5774480448b993611568732c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionType: 0
+  actionValue: 0
 --- !u!1 &863875709
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375952fa5774480448b993611568732c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionType: 0
+  actionValue: 0
 --- !u!65 &919434693
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1178,7 +1182,7 @@ GameObject:
   - component: {fileID: 1626269939}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1389,11 +1393,11 @@ GameObject:
   - component: {fileID: 1958121509}
   m_Layer: 0
   m_Name: Main Camera (1)
-  m_TagString: MainCamera
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!20 &1958121509
 Camera:
   m_ObjectHideFlags: 0
