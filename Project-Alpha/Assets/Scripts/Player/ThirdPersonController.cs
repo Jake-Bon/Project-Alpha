@@ -29,7 +29,7 @@ public class ThirdPersonController : MonoBehaviour
     CharacterController characterController;
     GameObject[] gameCameraList;
     GameObject gameCamera;
-    Pathfinding child;
+    ChildBehavior child;
     
     // Start is called before the first frame update
     void Start()
@@ -45,7 +45,7 @@ public class ThirdPersonController : MonoBehaviour
         gameCamera.SetActive(true);
         GameObject childTest = GameObject.Find("Child");
         if(childTest!=null){
-            child = childTest.GetComponent<Pathfinding>();   
+            child = childTest.GetComponent<ChildBehavior>();   
         }  
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -74,7 +74,7 @@ public class ThirdPersonController : MonoBehaviour
             Debug.Log("sdf");
             transform.position = spawnpoint.position;
             if(child!=null){
-                child.resetChild();
+                child.ResetChild();
             }
         }
 

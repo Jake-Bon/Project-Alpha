@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 151042161405300776}
-  - component: {fileID: 4478959471510017926}
   - component: {fileID: 4478959471510017925}
+  - component: {fileID: 8888447919854268461}
   m_Layer: 0
   m_Name: Child
   m_TagString: Untagged
@@ -34,22 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4478959471510017926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4460800010461128022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c805671c77594b542a6b315aeffda09f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  behaviour: 2
-  waypoints: []
-  followDistance: 5
-  spawnpoint: {fileID: 0}
 --- !u!195 &4478959471510017925
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -66,12 +50,28 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8888447919854268461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4460800010461128022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee60c0f318d52344a2af0d4b521f645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followDistance: 0
+  refreshRate: 0
+  defaultRoamTime: 10
+  spawnpoint: {fileID: 0}
 --- !u!1 &4478959470888564251
 GameObject:
   m_ObjectHideFlags: 0
