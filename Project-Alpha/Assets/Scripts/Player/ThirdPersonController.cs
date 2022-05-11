@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class ThirdPersonController : MonoBehaviour
 {
-    public bool tankControls = true;
+    public MovementType moveType = MovementType.Normal;
     public float gravity = 10.0f;
 
     float speed;
@@ -14,6 +15,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private float runSpeed = 4.5f;
     [SerializeField] private float backwardSpeed = 1.5f;
     [SerializeField] private float turningSpeed = 150f;
+    [SerializeField] private float mouseSensitivity = 10f;
     [SerializeField] private Transform spawnpoint;
 
     float horizontalInput;
@@ -59,8 +61,10 @@ public class ThirdPersonController : MonoBehaviour
         if (!player.stopInput) {
             HandleMovementInput();
 
-            if (tankControls)
-                ApplyTankMovement();
+            if (moveType==MovementType.TankWASD)
+                ApplyTankMovementWASD();
+            else if(moveType==MovementType.TankMouse)
+                ApplyTankMovementMouse();
             else 
                 ApplyNormalMovement();
         }
@@ -76,21 +80,43 @@ public class ThirdPersonController : MonoBehaviour
     }
 
     private void HandleMovementInput() {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-
-        horizontalInput = Mathf.Clamp(horizontalInput, -1, 1);
-        verticalInput = Mathf.Clamp(verticalInput, -1, 1);
-
         isRunning = Input.GetKey(KeyCode.LeftShift); // change key later?
 
         if (isRunning)
             speed = runSpeed;
         else
             speed = walkSpeed;
+
+        if(moveType==MovementType.TankMouse){
+            horizontalInput = Input.GetAxisRaw("Mouse X");
+            if(horizontalInput<0)
+                horizontalInput-=Math.Abs(Input.GetAxis("Mouse Y")); //Adds all mouse movement
+            else
+                horizontalInput+=Math.Abs(Input.GetAxis("Mouse Y")); //Adds all mouse movement
+        }else{
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+        }
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        horizontalInput = Mathf.Clamp(horizontalInput, -1, 1);
+        verticalInput = Mathf.Clamp(verticalInput, -1, 1);
     }
 
-    private void ApplyTankMovement() {
+    private void ApplyTankMovementMouse(){
+        if (verticalInput < 0)
+            speed = backwardSpeed;
+        float h = horizontalInput * Time.deltaTime * turningSpeed * mouseSensitivity;
+        float v = verticalInput * Time.deltaTime * speed;
+        
+        Vector3 move = new Vector3(0,0,v);
+        move = transform.TransformDirection(move);
+        characterController.Move(move);
+
+        Vector3 turn = new Vector3(0,h,0);
+        transform.Rotate(turn);
+    }
+
+    private void ApplyTankMovementWASD() {
         if (verticalInput < 0)
             speed = backwardSpeed;
         float h = horizontalInput * Time.deltaTime * turningSpeed;
@@ -152,4 +178,6 @@ public class ThirdPersonController : MonoBehaviour
         gameCamera = gameCameraList[choice];
         gameCamera.SetActive(true);
     }
+
+    public enum MovementType {Normal,TankWASD,TankMouse};
 }
