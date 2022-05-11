@@ -47,6 +47,7 @@ public class ThirdPersonController : MonoBehaviour
         if(childTest!=null){
             child = childTest.GetComponent<Pathfinding>();   
         }  
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
