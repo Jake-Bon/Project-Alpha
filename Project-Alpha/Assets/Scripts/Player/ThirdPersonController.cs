@@ -83,10 +83,12 @@ public class ThirdPersonController : MonoBehaviour
     private void HandleMovementInput() {
         isRunning = Input.GetKey(KeyCode.LeftShift); // change key later?
 
-        if (isRunning)
+        if (isRunning){
             speed = runSpeed;
-        else
+        }else{
             speed = walkSpeed;
+        }
+        child.SetSpeed(speed);
 
         if(moveType==MovementType.TankMouse){
             horizontalInput = Input.GetAxisRaw("Mouse X");

@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
 
     public bool isHiding = false;
 
+    public bool noChild = false;
+
     float baseVisibility = 100.0f;
 
     public float GetVisibility() {
@@ -22,6 +24,11 @@ public class Player : MonoBehaviour
         else if (inCrowd) {
             visibility -= 60.0f;
         }
+
+        if(noChild){
+            visibility -= 10.0f;
+        }
+
         return visibility/100.0f;
     }
     
