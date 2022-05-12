@@ -34,7 +34,7 @@ public class ThirdPersonController : MonoBehaviour
     ChildBehavior child;
     
     bool cameraChangeFlag;
-    bool hNewCamFlag; bool vNewCamFlag;
+    bool hNewCamFlag; bool vNewCamFlag; bool HVNewCamFlag;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +55,7 @@ public class ThirdPersonController : MonoBehaviour
         }  
         Cursor.lockState = CursorLockMode.Locked;
         cameraChangeFlag = false;
-        hNewCamFlag = false; vNewCamFlag = false;
+        hNewCamFlag = false; vNewCamFlag = false; HVNewCamFlag = false;
     }
 
     // Update is called once per frame
@@ -150,6 +150,46 @@ public class ThirdPersonController : MonoBehaviour
 
         Vector3 moveX = Vector3.one;
         Vector3 moveZ = Vector3.one;
+        HVFlagTrap(h, prevH, v, prevV);
+        if (cameraChangeFlag) {
+            if (!HVNewCamFlag) {
+                moveX = new Vector3(prevGameCamera.transform.right.x * h, 0, prevGameCamera.transform.right.z * h);
+                moveZ = new Vector3(prevGameCamera.transform.up.x * v, 0, prevGameCamera.transform.up.z * v);
+            } else {
+                moveX = new Vector3(gameCamera.transform.right.x * h, 0, gameCamera.transform.right.z * h);
+                moveZ = new Vector3(gameCamera.transform.up.x * v, 0, gameCamera.transform.up.z * v);
+                cameraChangeFlag = false;
+            }
+        }
+        else {
+            moveX = new Vector3(gameCamera.transform.right.x * h, 0, gameCamera.transform.right.z * h);
+            moveZ = new Vector3(gameCamera.transform.up.x * v, 0, gameCamera.transform.up.z * v);
+        }
+        Vector3 move = moveX + moveZ;
+        move = Vector3.Normalize(move) * Time.deltaTime * speed;
+
+        Vector3 moveTarget = new Vector3(move.x, 0, move.z);
+        Transform lastCamPos = gameCamera.transform;
+
+        //rotate player model in direction of movement
+        if (moveTarget != Vector3.zero) {
+            if(lastCamPos)
+                transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                        Quaternion.LookRotation(moveTarget),
+                        turningSpeed * 2 * Time.deltaTime);
+        }
+        characterController.Move(move);
+        prevV = v;
+        prevH = h;
+
+        //previous version
+
+        /*
+        float h = horizontalInput;
+        float v = verticalInput;
+
+        Vector3 moveX = Vector3.one;
+        Vector3 moveZ = Vector3.one;
         HFlagTrap(h, prevH);
         VFlagTrap(v, prevV);
         if (cameraChangeFlag) {
@@ -189,6 +229,7 @@ public class ThirdPersonController : MonoBehaviour
         characterController.Move(move);
         prevV = v;
         prevH = h;
+        */
     }
 
     private bool CheckIfGrounded() {
@@ -216,6 +257,7 @@ public class ThirdPersonController : MonoBehaviour
         cameraChangeFlag = true;
         hNewCamFlag = false;
         vNewCamFlag = false;
+        HVNewCamFlag = false;
         prevGameCamera = gameCamera;
         gameCamera.SetActive(false);
         gameCamera = gameCameraList[choice];
@@ -234,6 +276,12 @@ public class ThirdPersonController : MonoBehaviour
         //if player is not moving or changed directions
         if(curr == 0 || curr != prev)
             vNewCamFlag = true;
+    }
+
+    private void HVFlagTrap(float hCurr, float hPrev, float vCurr, float vPrev) {
+        //if player changes any directino, update now 
+        if(hCurr != hPrev || vCurr != vPrev)
+            HVNewCamFlag = true;
     }
 
 }
