@@ -29,8 +29,12 @@ public class ThirdPersonController : MonoBehaviour
     CharacterController characterController;
     GameObject[] gameCameraList;
     GameObject gameCamera;
+    GameObject prevGameCamera;
+    GameObject currGameCamera;
     ChildBehavior child;
     
+    bool cameraChangeFlag;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +47,13 @@ public class ThirdPersonController : MonoBehaviour
         }
         gameCamera = gameCameraList[0];
         gameCamera.SetActive(true);
+        prevGameCamera = gameCamera;
         GameObject childTest = GameObject.Find("Child");
         if(childTest!=null){
             child = childTest.GetComponent<ChildBehavior>();   
         }  
         Cursor.lockState = CursorLockMode.Locked;
+        cameraChangeFlag = false;
     }
 
     // Update is called once per frame
@@ -88,7 +94,7 @@ public class ThirdPersonController : MonoBehaviour
         }else{
             speed = walkSpeed;
         }
-        child.SetSpeed(speed);
+        //child.SetSpeed(speed);
 
         if(moveType==MovementType.TankMouse){
             horizontalInput = Input.GetAxisRaw("Mouse X");
@@ -137,13 +143,20 @@ public class ThirdPersonController : MonoBehaviour
         float h = horizontalInput;
         float v = verticalInput;
 
-        Vector3 moveX = new Vector3(gameCamera.transform.right.x * h, 0, gameCamera.transform.right.z * h);
-        Vector3 moveZ = new Vector3(gameCamera.transform.up.x * v, 0, gameCamera.transform.up.z * v);
+        if(cameraChangeFlag && (h != 0 || v != 0)) //if camera changed & player is still moving, use previous camera as reference
+            currGameCamera = prevGameCamera;
+        else {//if not, use current camera as reference
+            currGameCamera = gameCamera;
+            cameraChangeFlag = false;
+        }
+
+        Vector3 moveX = new Vector3(currGameCamera.transform.right.x * h, 0, currGameCamera.transform.right.z * h);
+        Vector3 moveZ = new Vector3(currGameCamera.transform.up.x * v, 0, currGameCamera.transform.up.z * v);
         Vector3 move = moveX + moveZ;
         move = Vector3.Normalize(move) * Time.deltaTime * speed;
 
         Vector3 moveTarget = new Vector3(move.x, 0, move.z);
-        Transform lastCamPos = gameCamera.transform;
+        Transform lastCamPos = currGameCamera.transform;
 
         //rotate player model in direction of movement
         if (moveTarget != Vector3.zero) {
@@ -177,6 +190,8 @@ public class ThirdPersonController : MonoBehaviour
     }
 
     public void ChangeCamera(int choice){
+        cameraChangeFlag = true;
+        prevGameCamera = gameCamera;
         gameCamera.SetActive(false);
         gameCamera = gameCameraList[choice];
         gameCamera.SetActive(true);
