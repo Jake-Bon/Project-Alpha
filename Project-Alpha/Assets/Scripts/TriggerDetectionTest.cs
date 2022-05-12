@@ -17,7 +17,7 @@ public class TriggerDetectionTest : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
+        //Debug.Log("Enter");
         if(actionType==ActionType.CameraChange){
             HandleCameraChange();
         }
@@ -28,7 +28,7 @@ public class TriggerDetectionTest : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exit");
+        //Debug.Log("Exit");
     }
 
     void HandleCameraChange(){
