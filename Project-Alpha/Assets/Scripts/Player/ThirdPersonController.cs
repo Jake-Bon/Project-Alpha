@@ -79,7 +79,6 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         if(gameObject.transform.position.y<-3.0f){
-            Debug.Log("sdf");
             transform.position = spawnpoint.position;
             if(child!=null){
                 child.ResetChild();
@@ -96,7 +95,8 @@ public class ThirdPersonController : MonoBehaviour
         }else{
             speed = walkSpeed;
         }
-        //child.SetSpeed(speed);
+        if(child!=null)
+            child.SetSpeed(speed);
 
         if(moveType==MovementType.TankMouse){
             horizontalInput = Input.GetAxisRaw("Mouse X");
