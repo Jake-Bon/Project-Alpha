@@ -21,7 +21,7 @@ public class Strafe : MonoBehaviour
         if(!info.isRight){
             transform.Rotate(0, 180.0f, 0, Space.Self);
         }
-        agent.velocity = transform.forward.normalized*player.GetSpeed()*((4.0f-info.magnitude)/2);
+        agent.velocity = transform.forward.normalized*player.GetSpeed()*((4.0f-info.magnitude));
         StartCoroutine(EndStrafe(agent, new Vector3(transform.position.x,transform.position.y,transform.position.z)));
         isStrafe=false;
     }
