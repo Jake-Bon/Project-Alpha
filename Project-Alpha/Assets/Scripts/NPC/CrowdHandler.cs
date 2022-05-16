@@ -41,9 +41,9 @@ public class CrowdHandler : MonoBehaviour
                 if(ptr!=i&&magnitude<=personalSpace){
                     if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
                     {
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,magnitude));
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f));
                     }else{
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,magnitude));
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,3.5f));
                     }
                 }
             }
