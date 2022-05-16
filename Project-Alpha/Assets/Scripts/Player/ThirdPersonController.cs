@@ -284,4 +284,8 @@ public class ThirdPersonController : MonoBehaviour
             HVNewCamFlag = true;
     }
 
+    public float GetSpeed(){
+        return speed;
+    }
+
 }

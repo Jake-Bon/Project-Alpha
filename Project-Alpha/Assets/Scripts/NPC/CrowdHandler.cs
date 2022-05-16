@@ -24,17 +24,29 @@ public class CrowdHandler : MonoBehaviour
     {
         if(ptr==npcList.Length){
             for(int i = 0; i<npcList.Length;i++){
-                if((transform.position-npcList[i].transform.position).sqrMagnitude<=personalSpace){
+                float magnitude = (transform.position-npcList[i].transform.position).sqrMagnitude;
+                if(magnitude<=personalSpace){
                     if (transform.InverseTransformPoint(npcList[i].transform.position).x > 0)
                     {
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,transform));
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,transform,magnitude));
                     }else{
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,transform));
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,transform,magnitude));
                     }
                 }
             }
         }else{
-
+            for(int i = 0; i<npcList.Length;i++){
+                Transform npcTransform = npcList[ptr].transform;
+                float magnitude = (npcTransform.position-npcList[i].transform.position).sqrMagnitude;
+                if(ptr!=i&&magnitude<=personalSpace){
+                    if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
+                    {
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,magnitude));
+                    }else{
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,magnitude));
+                    }
+                }
+            }
         }
         incrRoundRobin();
     }
@@ -49,8 +61,10 @@ public class CrowdHandler : MonoBehaviour
 public class StrafeInfo{
     public bool isRight;
     public Transform source;
-    public StrafeInfo(bool b, Transform t){
+    public float magnitude;
+    public StrafeInfo(bool b, Transform t, float m){
         isRight = b;
         source = t;
+        magnitude = m;
     }
 }

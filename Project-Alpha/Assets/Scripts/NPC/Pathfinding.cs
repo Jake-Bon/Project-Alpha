@@ -15,6 +15,10 @@ public class Pathfinding : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
+        if (behaviour == Behaviour.Stationary) {
+            return;
+        }
+
         if (waypoints.Count < 1) {
             GameObject[] waypointGameObjects = GameObject.FindGameObjectsWithTag("Waypoint");
             foreach (GameObject obj in waypointGameObjects) {
@@ -22,9 +26,6 @@ public class Pathfinding : MonoBehaviour
             }
         }
         agent.destination = waypoints[0].transform.position;
-        if (behaviour == Behaviour.Stationary) {
-            Pause();
-        }
     }
 
     // Update is called once per frame
