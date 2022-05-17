@@ -38,7 +38,8 @@ public class CrowdHandler : MonoBehaviour
             for(int i = 0; i<npcList.Length;i++){
                 Transform npcTransform = npcList[ptr].transform;
                 float magnitude = (npcTransform.position-npcList[i].transform.position).sqrMagnitude;
-                if(ptr!=i&&magnitude<=personalSpace){
+                bool ignore = (npcList[ptr].GetComponent<Pathfinding>()==null||npcList[ptr].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&npcList[i].GetComponent<Pathfinding>()!=null&&(npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Patrol||npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Move);
+                if(ptr!=i&&!ignore&&magnitude<=personalSpace){
                     if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
                     {
                         npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f));
