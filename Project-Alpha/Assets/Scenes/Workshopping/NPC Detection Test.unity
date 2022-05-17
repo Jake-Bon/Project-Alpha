@@ -16203,7 +16203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93809565dcfa2904a9a33255f113493e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personalSpace: 3
+  personalSpace: 2
   capsuleDiameter: 1
 --- !u!1 &1365530291
 GameObject:
