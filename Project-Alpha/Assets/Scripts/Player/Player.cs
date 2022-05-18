@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public bool noChild = false;
 
     float baseVisibility = 100.0f;
+    float baseNoise = 0.00f;
 
     public float GetVisibility() {
         float visibility = baseVisibility;
@@ -30,6 +31,17 @@ public class Player : MonoBehaviour
         }
 
         return visibility/100.0f;
+    }
+
+    public float GetNoise() {
+        float noise = baseNoise;
+
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            noise += 60.0f;
+        } else if (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0) {
+            noise += 20.0f;
+        }
+        return noise/100.0f;
     }
     
 }

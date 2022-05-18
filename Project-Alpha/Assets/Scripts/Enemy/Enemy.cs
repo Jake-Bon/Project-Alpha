@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     
     Pathfinding pathfinding;
     FOVDetector fov;
+    NoiseDetector earshot;
     Material relaxedMaterial;
     Material alertMaterial;
     Renderer[] renderers; 
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         fov = gameObject.GetComponent<FOVDetector>();
+        earshot = gameObject.GetComponent<NoiseDetector>();
         pathfinding = gameObject.GetComponent<Pathfinding>();
         relaxedMaterial = Resources.Load<Material>("Materials/Red");
         alertMaterial = Resources.Load<Material>("Materials/Bright Red");
@@ -28,7 +30,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fov.inSight) {
+        if (fov.inSight || earshot.inEarshot) {
             if (!isAlert) ToggleAlert();
         } else {
             if (isAlert) ToggleAlert();

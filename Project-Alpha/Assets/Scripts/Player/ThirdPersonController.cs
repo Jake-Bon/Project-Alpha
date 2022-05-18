@@ -22,6 +22,7 @@ public class ThirdPersonController : MonoBehaviour
     float verticalInput;
 
     //States
+    bool isWalking;
     bool isRunning;
     bool isGrounded;
     
