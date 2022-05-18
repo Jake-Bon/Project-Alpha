@@ -8,8 +8,8 @@ public class CrowdHandler : MonoBehaviour
     //Transform player;
     int ptr;
 
-    [SerializeField] private double personalSpace = 3.0f;
-    [SerializeField] private double capsuleDiameter = 1.0f;
+    [SerializeField] private float personalSpace = 3.0f;
+    [SerializeField] private float capsuleDiameter = 1.0f;
     
     // Start is called before the first frame update
     void Start()
@@ -49,13 +49,17 @@ public class CrowdHandler : MonoBehaviour
                 }
             }
         }
-        incrRoundRobin();
+        IncrRoundRobin();
     }
 
-    void incrRoundRobin(){
+    void IncrRoundRobin(){
         ptr++;
         if(ptr==npcList.Length+1)
             ptr=0;
+    }
+
+    public float GetResetDist(){
+        return personalSpace+capsuleDiameter;
     }
 }
 

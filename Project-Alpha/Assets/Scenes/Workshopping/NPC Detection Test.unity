@@ -379,6 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &15500629
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1164,6 +1165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &41190100
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1367,6 +1369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &54871261
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1570,6 +1573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &64351377
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1805,6 +1809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &76598252
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2198,6 +2203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &108853999
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2688,6 +2694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &134220029
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5146,6 +5153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &330229834
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5442,6 +5450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &348076418
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5544,6 +5553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &352615701
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6232,6 +6242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &407334805
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6823,6 +6834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &444166354
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8343,6 +8355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &537610451
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8445,6 +8458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &540366355
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10053,6 +10067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &612688194
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11736,6 +11751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &725866196
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11864,6 +11880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!136 &734595837
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12037,6 +12054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &743153471
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12543,6 +12561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &773418809
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12772,6 +12791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!136 &793673483
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12945,6 +12965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &815526706
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -13144,6 +13165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &818673490
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -13440,6 +13462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &835175227
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -13542,6 +13565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &838101597
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -13644,6 +13668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &845751744
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15310,6 +15335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &984414137
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15905,6 +15931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1029112062
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16104,6 +16131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1037159898
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16695,6 +16723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1103495117
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -18428,6 +18457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1225374863
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -18627,6 +18657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1232586024
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19020,6 +19051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1239520815
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19219,6 +19251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1259020748
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19418,6 +19451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1264595640
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20401,6 +20435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1307316001
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20895,6 +20930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1342781842
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -20997,6 +21033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1346143179
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -21054,7 +21091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93809565dcfa2904a9a33255f113493e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  personalSpace: 2
+  personalSpace: 1.5
   capsuleDiameter: 1
 --- !u!1 &1365530291
 GameObject:
@@ -21809,6 +21846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1445492269
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -22731,6 +22769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1500884845
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23225,6 +23264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1556006132
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23525,6 +23565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1571602622
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -24116,6 +24157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1600331252
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -24218,6 +24260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1600577959
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -24346,6 +24389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!136 &1610134982
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -24616,6 +24660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1618772880
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25084,6 +25129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1639610809
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25574,6 +25620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1670416878
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25874,6 +25921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1705887570
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -26275,6 +26323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1734463863
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -26866,6 +26915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1797746580
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -27623,6 +27673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1821008787
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -28417,6 +28468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1879932462
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -28721,6 +28773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &1896102828
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -29633,6 +29686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!136 &1970947240
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -30239,6 +30293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &2025286179
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31129,6 +31184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &2083684635
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31328,6 +31384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &2098603889
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -31725,6 +31782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!195 &2106906079
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -32094,6 +32152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d65f1f36a930b43935c08426da294d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetDistance: 4
 --- !u!1 &6333034254962160555
 GameObject:
   m_ObjectHideFlags: 0
