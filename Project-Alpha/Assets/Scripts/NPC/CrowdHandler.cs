@@ -4,47 +4,101 @@ using UnityEngine;
 
 public class CrowdHandler : MonoBehaviour
 {   
-    GameObject[] npcList;
-    //Transform player;
+    GameObject[] intermediateNpcList;
+    List<GameObject> npcList;
+    List<bool> npcAlignment;
+    ThirdPersonController player;
     int ptr;
 
+    [SerializeField] private int updatesPerFrame = 10;
     [SerializeField] private float personalSpace = 3.0f;
-    [SerializeField] private float capsuleDiameter = 1.0f;
+    List<float> capsuleDiameter;
     
     // Start is called before the first frame update
     void Start()
     {
-        //player = GameObject.Find("Player").GetComponent<Transform>();
-        npcList = GameObject.FindGameObjectsWithTag("Neutral");
+        player = GameObject.Find("Player").GetComponent<ThirdPersonController>();
+        intermediateNpcList = GameObject.FindGameObjectsWithTag("Neutral");
+        npcList = new List<GameObject>();
+        npcAlignment = new List<bool>();
+        capsuleDiameter = new List<float>();
+       
+        int i = 0;
+        foreach(GameObject npc in intermediateNpcList){
+            if(npc.GetComponent<Strafe>().enabled==true){
+                capsuleDiameter.Add(npc.GetComponent<CapsuleCollider>().radius*2);
+                if(npc.GetComponent<Enemy>()!=null)
+                    npcAlignment.Add(true);
+                else
+                    npcAlignment.Add(false);
+                i++;
+                npcList.Add(npc);
+            }
+        }
+
+        if(updatesPerFrame<npcList.Count){
+            updatesPerFrame = npcList.Count;
+        }
+        ptr = 0;
+
+    }
+
+    void resetCrowdHandler(){ //Call on cam changes if we disable npcs out of view?
+        npcList = new List<GameObject>();
+        npcAlignment = new List<bool>();
+        capsuleDiameter = new List<float>();
+       
+        int i = 0;
+        foreach(GameObject npc in intermediateNpcList){
+            if(npc.GetComponent<Strafe>().enabled==true){
+                capsuleDiameter.Add(npc.GetComponent<CapsuleCollider>().radius*2);
+                if(npc.GetComponent<Enemy>()!=null)
+                    npcAlignment.Add(true);
+                else
+                    npcAlignment.Add(false);
+                i++;
+                npcList.Add(npc);
+            }
+        }
+
+        if(updatesPerFrame<npcList.Count){
+            updatesPerFrame = npcList.Count;
+        }
         ptr = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(ptr==npcList.Length){
-            for(int i = 0; i<npcList.Length;i++){
+        for(int i = 0; i<updatesPerFrame;i++){
+            doStrafing();
+        }
+    }
+
+    void doStrafing(){
+        if(ptr==npcList.Count){
+            for(int i = 0; i<npcList.Count;i++){
                 float magnitude = (transform.position-npcList[i].transform.position).sqrMagnitude;
-                if(magnitude<=personalSpace){
+                if(!(npcAlignment[i])&&magnitude<=personalSpace+capsuleDiameter[i]){
                     if (transform.InverseTransformPoint(npcList[i].transform.position).x > 0)
                     {
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,transform,magnitude));
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,transform,magnitude,(player.GetSpeed())));
                     }else{
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,transform,magnitude));
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,transform,magnitude,(player.GetSpeed())));
                     }
                 }
             }
         }else{
-            for(int i = 0; i<npcList.Length;i++){
+            for(int i = 0; i<npcList.Count;i++){
                 Transform npcTransform = npcList[ptr].transform;
                 float magnitude = (npcTransform.position-npcList[i].transform.position).sqrMagnitude;
                 bool ignore = (npcList[ptr].GetComponent<Pathfinding>()==null||npcList[ptr].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&npcList[i].GetComponent<Pathfinding>()!=null&&(npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Patrol||npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Move);
-                if(ptr!=i&&!ignore&&magnitude<=personalSpace){
+                if(ptr!=i&&!ignore&&magnitude<=personalSpace+capsuleDiameter[i]){
                     if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
                     {
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f));
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f,2.5f));
                     }else{
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,3.5f));
+                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,3.5f,2.5f));
                     }
                 }
             }
@@ -54,12 +108,12 @@ public class CrowdHandler : MonoBehaviour
 
     void IncrRoundRobin(){
         ptr++;
-        if(ptr==npcList.Length+1)
+        if(ptr==npcList.Count+1)
             ptr=0;
     }
 
-    public float GetResetDist(){
-        return personalSpace+capsuleDiameter;
+    public float GetPersonalSpace(){
+        return personalSpace;
     }
 }
 
@@ -67,9 +121,11 @@ public class StrafeInfo{
     public bool isRight;
     public Transform source;
     public float magnitude;
-    public StrafeInfo(bool b, Transform t, float m){
+    public float speed;
+    public StrafeInfo(bool b, Transform t, float m, float s){
         isRight = b;
         source = t;
         magnitude = m;
+        speed = s;
     }
 }

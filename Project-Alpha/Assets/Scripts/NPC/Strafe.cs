@@ -6,12 +6,13 @@ public class Strafe : MonoBehaviour
 {
     [Header("Optional Field")]
     [SerializeField] private float resetDistance = -1.0f;
-    ThirdPersonController player;
     bool isStrafe = false;
+    Transform rotationHandler;
+
     public void Start(){
-        player = GameObject.Find("Player").GetComponent<ThirdPersonController>();
         if(resetDistance==-1.0f)
-            resetDistance = GameObject.Find("Player").GetComponent<CrowdHandler>().GetResetDist();
+            resetDistance = GameObject.Find("Player").GetComponent<CrowdHandler>().GetPersonalSpace()+GetComponent<CapsuleCollider>().radius*2;
+        rotationHandler = GameObject.Find("RotationHandler").GetComponent<Transform>();
     }
 
     public void DoStrafe(StrafeInfo info){
@@ -19,24 +20,16 @@ public class Strafe : MonoBehaviour
             return;
         }
         isStrafe = true;
-        Debug.Log("Attempting Strafe... Direction: " + info.isRight);
         UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        transform.forward = info.source.right;
+        rotationHandler.forward = info.source.right;
         if(!info.isRight){
-            transform.Rotate(0, 180.0f, 0, Space.Self);
+            rotationHandler.Rotate(0, 180.0f, 0, Space.Self);
         }
-        agent.velocity = transform.forward.normalized*(player.GetSpeed()/3)*((resetDistance-info.magnitude));
-        //StartCoroutine(EndStrafe(agent, new Vector3(transform.position.x,transform.position.y,transform.position.z)));
+        agent.velocity = Vector3.ClampMagnitude(agent.velocity + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)),4.5f);
+        Debug.Log("Why not move + " + info.isRight);
         isStrafe=false;
 
         if((transform.position-info.source.position).sqrMagnitude>=resetDistance)
             agent.velocity = Vector3.zero;
-    }
-
-    IEnumerator EndStrafe(UnityEngine.AI.NavMeshAgent agent,Vector3 initPos){
-        while ((transform.position-initPos).sqrMagnitude<4.0f) {
-            yield return null;
-        }
-        
     }
 }
