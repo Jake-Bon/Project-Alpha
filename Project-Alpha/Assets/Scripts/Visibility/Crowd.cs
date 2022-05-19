@@ -17,7 +17,8 @@ public class Crowd : MonoBehaviour
     }
     void OnTriggerStay(Collider other)
     {
-        
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player")) {
+        }
     }
     void OnTriggerExit(Collider other)
     {

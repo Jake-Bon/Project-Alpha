@@ -27,10 +27,11 @@ public class ThirdPersonController : MonoBehaviour
     
     Player player;
     CharacterController characterController;
-    GameObject[] gameCameraList;
+    CrowdHandler crowdHandler;
+    GameObject[] gameCameraPositionList;
     GameObject gameCamera;
-    GameObject prevGameCamera;
-    GameObject currGameCamera;
+    GameObject prevGameCameraPos;
+    GameObject currGameCameraPos;
     ChildBehavior child;
     
     bool cameraChangeFlag;
@@ -42,17 +43,16 @@ public class ThirdPersonController : MonoBehaviour
         player = GetComponent<Player>();
         characterController = GetComponent<CharacterController>();
 
-        gameCameraList = GameObject.FindGameObjectsWithTag("Camera");
-        foreach(GameObject cam in gameCameraList){
-                cam.SetActive(false);
-        }
-        gameCamera = gameCameraList[0];
-        gameCamera.SetActive(true);
-        prevGameCamera = gameCamera;
+        gameCamera = GameObject.Find("Camera");
+        gameCameraPositionList = GameObject.FindGameObjectsWithTag("Positions");
+        CopyTransform(gameCamera,gameCameraPositionList[0]);
+        prevGameCameraPos = gameCameraPositionList[0];
+        currGameCameraPos = gameCameraPositionList[0];
         GameObject childTest = GameObject.Find("Child");
         if(childTest!=null){
             child = childTest.GetComponent<ChildBehavior>();   
         }  
+        crowdHandler = GetComponent<CrowdHandler>();
         Cursor.lockState = CursorLockMode.Locked;
         cameraChangeFlag = false;
         hNewCamFlag = false; vNewCamFlag = false; HVNewCamFlag = false;
@@ -153,8 +153,8 @@ public class ThirdPersonController : MonoBehaviour
         HVFlagTrap(h, prevH, v, prevV);
         if (cameraChangeFlag) {
             if (!HVNewCamFlag) {
-                moveX = new Vector3(prevGameCamera.transform.right.x * h, 0, prevGameCamera.transform.right.z * h);
-                moveZ = new Vector3(prevGameCamera.transform.up.x * v, 0, prevGameCamera.transform.up.z * v);
+                moveX = new Vector3(prevGameCameraPos.transform.right.x * h, 0, prevGameCameraPos.transform.right.z * h);
+                moveZ = new Vector3(prevGameCameraPos.transform.up.x * v, 0, prevGameCameraPos.transform.up.z * v);
             } else {
                 moveX = new Vector3(gameCamera.transform.right.x * h, 0, gameCamera.transform.right.z * h);
                 moveZ = new Vector3(gameCamera.transform.up.x * v, 0, gameCamera.transform.up.z * v);
@@ -195,12 +195,12 @@ public class ThirdPersonController : MonoBehaviour
         if (cameraChangeFlag) {
             Debug.Log (hNewCamFlag + ", " + vNewCamFlag);
             if (!hNewCamFlag) {
-                moveX = new Vector3(prevGameCamera.transform.right.x * h, 0, prevGameCamera.transform.right.z * h);
+                moveX = new Vector3(prevGameCameraPos.transform.right.x * h, 0, prevGameCameraPos.transform.right.z * h);
             } else {
                 moveX = new Vector3(gameCamera.transform.right.x * h, 0, gameCamera.transform.right.z * h);
             }
             if(!vNewCamFlag) {
-                moveZ = new Vector3(prevGameCamera.transform.up.x * v, 0, prevGameCamera.transform.up.z * v);
+                moveZ = new Vector3(prevGameCameraPos.transform.up.x * v, 0, prevGameCameraPos.transform.up.z * v);
             } else {   
                 moveZ = new Vector3(gameCamera.transform.up.x * v, 0, gameCamera.transform.up.z * v);
             }
@@ -258,10 +258,24 @@ public class ThirdPersonController : MonoBehaviour
         hNewCamFlag = false;
         vNewCamFlag = false;
         HVNewCamFlag = false;
-        prevGameCamera = gameCamera;
-        gameCamera.SetActive(false);
-        gameCamera = gameCameraList[choice];
-        gameCamera.SetActive(true);
+        prevGameCameraPos = currGameCameraPos;
+        currGameCameraPos = gameCameraPositionList[choice];
+        CopyTransform(gameCamera,currGameCameraPos);
+        
+    }
+
+    public void CopyTransform(GameObject a, GameObject b){
+        Vector3 posA = a.transform.position;
+        Vector3 posB = b.transform.position;
+
+        posA.x = posB.x;
+        posA.y = posB.y;
+        posA.z = posB.z;
+
+        a.transform.position = posA;
+
+        Vector3 rotB = new Vector3(b.transform.eulerAngles.x, b.transform.eulerAngles.y, b.transform.eulerAngles.z);
+        a.transform.eulerAngles = rotB;
     }
 
     public enum MovementType {Normal,TankWASD,TankMouse};

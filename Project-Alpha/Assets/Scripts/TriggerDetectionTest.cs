@@ -17,6 +17,8 @@ public class TriggerDetectionTest : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player")) 
+            return;
         //Debug.Log("Enter");
         if(actionType==ActionType.CameraChange){
             HandleCameraChange();
@@ -24,10 +26,13 @@ public class TriggerDetectionTest : MonoBehaviour
     }
     void OnTriggerStay(Collider other)
     {
-        
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player")) 
+            return;
     }
     void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player")) 
+            return;
         //Debug.Log("Exit");
     }
 

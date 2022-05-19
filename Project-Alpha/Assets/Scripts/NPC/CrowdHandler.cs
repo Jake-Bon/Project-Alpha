@@ -9,9 +9,12 @@ public class CrowdHandler : MonoBehaviour
     List<bool> npcAlignment;
     ThirdPersonController player;
     int ptr;
+    bool npcsInit = false;
 
-    [SerializeField] private int updatesPerFrame = 10;
+    [SerializeField] private int npcUpdatesPerFrame = 10;
     [SerializeField] private float personalSpace = 3.0f;
+    private int updatesPerFrame;
+
     List<float> capsuleDiameter;
     
     // Start is called before the first frame update
@@ -19,38 +22,17 @@ public class CrowdHandler : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<ThirdPersonController>();
         intermediateNpcList = GameObject.FindGameObjectsWithTag("Neutral");
-        npcList = new List<GameObject>();
-        npcAlignment = new List<bool>();
-        capsuleDiameter = new List<float>();
-       
-        int i = 0;
-        foreach(GameObject npc in intermediateNpcList){
-            if(npc.GetComponent<Strafe>().enabled==true){
-                capsuleDiameter.Add(npc.GetComponent<CapsuleCollider>().radius*2);
-                if(npc.GetComponent<Enemy>()!=null)
-                    npcAlignment.Add(true);
-                else
-                    npcAlignment.Add(false);
-                i++;
-                npcList.Add(npc);
-            }
-        }
-
-        if(updatesPerFrame<npcList.Count){
-            updatesPerFrame = npcList.Count;
-        }
-        ptr = 0;
-
     }
 
-    void resetCrowdHandler(){ //Call on cam changes if we disable npcs out of view?
+    IEnumerator ResetCrowdHandler(){ //Call on cam changes if we disable npcs out of view?
+        yield return new WaitForSeconds(.1f);
         npcList = new List<GameObject>();
         npcAlignment = new List<bool>();
         capsuleDiameter = new List<float>();
        
         int i = 0;
         foreach(GameObject npc in intermediateNpcList){
-            if(npc.GetComponent<Strafe>().enabled==true){
+            if(npc.GetComponent<Renderer>().isVisible){
                 capsuleDiameter.Add(npc.GetComponent<CapsuleCollider>().radius*2);
                 if(npc.GetComponent<Enemy>()!=null)
                     npcAlignment.Add(true);
@@ -61,21 +43,30 @@ public class CrowdHandler : MonoBehaviour
             }
         }
 
-        if(updatesPerFrame<npcList.Count){
+        updatesPerFrame = npcUpdatesPerFrame;
+
+        if(npcUpdatesPerFrame>npcList.Count){
             updatesPerFrame = npcList.Count;
         }
         ptr = 0;
+        yield return null;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!npcsInit){
+            Debug.Log("e");
+            npcsInit = true;
+            StartCoroutine(ResetCrowdHandler());
+        }
         for(int i = 0; i<updatesPerFrame;i++){
             doStrafing();
         }
     }
 
     void doStrafing(){
+        Debug.Log(ptr + " " + npcList.Count);
         if(ptr==npcList.Count){
             for(int i = 0; i<npcList.Count;i++){
                 float magnitude = (transform.position-npcList[i].transform.position).sqrMagnitude;
