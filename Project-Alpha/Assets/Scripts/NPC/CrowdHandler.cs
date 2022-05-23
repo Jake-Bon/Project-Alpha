@@ -10,6 +10,7 @@ public class CrowdHandler : MonoBehaviour
     ThirdPersonController player;
     int ptr;
     bool npcsInit = false;
+    bool setupDone = false;
 
     [SerializeField] private int npcUpdatesPerFrame = 10;
     [SerializeField] private float personalSpace = 3.0f;
@@ -49,6 +50,7 @@ public class CrowdHandler : MonoBehaviour
             updatesPerFrame = npcList.Count;
         }
         ptr = 0;
+        setupDone = true;
         yield return null;
     }
 
@@ -56,41 +58,40 @@ public class CrowdHandler : MonoBehaviour
     void Update()
     {
         if(!npcsInit){
-            Debug.Log("e");
             npcsInit = true;
             StartCoroutine(ResetCrowdHandler());
-        }
-        for(int i = 0; i<updatesPerFrame;i++){
-            doStrafing();
+        }else if(setupDone){
+            doPlayerStrafing();
+            for(int i = 0; i<updatesPerFrame;i++){
+                doNPCStrafing();
+            }
         }
     }
 
-    void doStrafing(){
-        Debug.Log(ptr + " " + npcList.Count);
-        if(ptr==npcList.Count){
-            for(int i = 0; i<npcList.Count;i++){
-                float magnitude = (transform.position-npcList[i].transform.position).sqrMagnitude;
-                if(!(npcAlignment[i])&&magnitude<=personalSpace+capsuleDiameter[i]){
-                    if (transform.InverseTransformPoint(npcList[i].transform.position).x > 0)
-                    {
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,transform,magnitude,(player.GetSpeed())));
-                    }else{
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,transform,magnitude,(player.GetSpeed())));
-                    }
+    void doPlayerStrafing(){
+        for(int i = 0; i<npcList.Count;i++){
+            float magnitude = (transform.position-npcList[i].transform.position).sqrMagnitude;
+            if(!(npcAlignment[i])&&magnitude<=personalSpace+capsuleDiameter[i]){
+                if (transform.InverseTransformPoint(npcList[i].transform.position).x > 0)
+                {
+                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,transform,magnitude,(player.GetSpeed())));
+                }else{
+                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,transform,magnitude,(player.GetSpeed())));
                 }
             }
-        }else{
-            for(int i = 0; i<npcList.Count;i++){
-                Transform npcTransform = npcList[ptr].transform;
-                float magnitude = (npcTransform.position-npcList[i].transform.position).sqrMagnitude;
-                bool ignore = (npcList[ptr].GetComponent<Pathfinding>()==null||npcList[ptr].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&npcList[i].GetComponent<Pathfinding>()!=null&&(npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Patrol||npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Move);
-                if(ptr!=i&&!ignore&&magnitude<=personalSpace+capsuleDiameter[i]){
-                    if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
-                    {
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f,2.5f));
-                    }else{
-                        npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,3.5f,2.5f));
-                    }
+        }
+    }
+    void doNPCStrafing(){
+        for(int i = 0; i<npcList.Count;i++){
+            Transform npcTransform = npcList[ptr].transform;
+            float magnitude = (npcTransform.position-npcList[i].transform.position).sqrMagnitude;
+            bool ignore = (npcList[ptr].GetComponent<Pathfinding>()==null||npcList[ptr].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&npcList[i].GetComponent<Pathfinding>()!=null&&(npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Patrol||npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Move);
+            if(ptr!=i&&!ignore&&magnitude<=personalSpace+capsuleDiameter[i]){
+                if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
+                {
+                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f,2.5f));
+                }else{
+                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,3.5f,2.5f));
                 }
             }
         }
@@ -99,7 +100,7 @@ public class CrowdHandler : MonoBehaviour
 
     void IncrRoundRobin(){
         ptr++;
-        if(ptr==npcList.Count+1)
+        if(ptr==npcList.Count)
             ptr=0;
     }
 
