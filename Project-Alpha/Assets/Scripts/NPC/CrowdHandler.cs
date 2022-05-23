@@ -7,6 +7,10 @@ public class CrowdHandler : MonoBehaviour
     GameObject[] intermediateNpcList;
     List<GameObject> npcList;
     List<bool> npcAlignment;
+
+    GameObject[] intermediateEnemyList;
+    List<Transform> enemyList;
+
     ThirdPersonController player;
     int ptr;
     bool npcsInit = false;
@@ -23,6 +27,12 @@ public class CrowdHandler : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<ThirdPersonController>();
         intermediateNpcList = GameObject.FindGameObjectsWithTag("Neutral");
+        intermediateEnemyList = GameObject.FindGameObjectsWithTag("Enemy");
+
+        enemyList = new List<Transform>();
+        foreach(GameObject enemy in intermediateEnemyList){
+            enemyList.Add(enemy.GetComponent<Transform>());
+        }
     }
 
     IEnumerator ResetCrowdHandler(){ //Call on cam changes if we disable npcs out of view?
@@ -62,6 +72,9 @@ public class CrowdHandler : MonoBehaviour
             StartCoroutine(ResetCrowdHandler());
         }else if(setupDone){
             doPlayerStrafing();
+            foreach(Transform t in enemyList){
+                doEnemyStrafing(t);
+            }
             for(int i = 0; i<updatesPerFrame;i++){
                 doNPCStrafing();
             }
@@ -81,6 +94,22 @@ public class CrowdHandler : MonoBehaviour
             }
         }
     }
+
+    void doEnemyStrafing(Transform npcTransform){
+        for(int i = 0; i<npcList.Count;i++){
+            float magnitude = (npcTransform.position-npcList[i].transform.position).sqrMagnitude;
+            bool ignore = (npcList[ptr].GetComponent<Pathfinding>()==null||npcList[ptr].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&npcList[i].GetComponent<Pathfinding>()!=null;
+            if(!ignore&&magnitude<=personalSpace+capsuleDiameter[i]){
+                if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
+                {
+                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f,2.5f));
+                }else{
+                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,3.5f,2.5f));
+                }
+            }
+        }
+    }
+
     void doNPCStrafing(){
         for(int i = 0; i<npcList.Count;i++){
             Transform npcTransform = npcList[ptr].transform;

@@ -25,7 +25,7 @@ public class Strafe : MonoBehaviour
         if(!info.isRight){
             rotationHandler.Rotate(0, 180.0f, 0, Space.Self);
         }
-        agent.velocity = Vector3.ClampMagnitude(agent.velocity + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)),4.5f);
+        agent.velocity = Vector3.ClampMagnitude(agent.velocity + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)),3.5f);
         isStrafe=false;
 
         if((transform.position-info.source.position).sqrMagnitude>=resetDistance)
