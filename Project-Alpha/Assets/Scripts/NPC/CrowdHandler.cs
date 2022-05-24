@@ -18,9 +18,11 @@ public class CrowdHandler : MonoBehaviour
 
     [SerializeField] private int npcUpdatesPerFrame = 10;
     [SerializeField] private float personalSpace = 3.0f;
+    [SerializeField] private bool allowInterEnemyStrafe;
     private int updatesPerFrame;
 
-    List<float> capsuleDiameter;
+    List<float> capsuleDiameterNPCs;
+    List<float> capsuleDiameterEnemies;
     
     // Start is called before the first frame update
     void Start()
@@ -39,12 +41,13 @@ public class CrowdHandler : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         npcList = new List<GameObject>();
         npcAlignment = new List<bool>();
-        capsuleDiameter = new List<float>();
+        capsuleDiameterNPCs = new List<float>();
+        capsuleDiameterEnemies = new List<float>();
        
         int i = 0;
         foreach(GameObject npc in intermediateNpcList){
             if(npc.GetComponent<Renderer>().isVisible){
-                capsuleDiameter.Add(npc.GetComponent<CapsuleCollider>().radius*2);
+                capsuleDiameterNPCs.Add(npc.GetComponent<CapsuleCollider>().radius*2);
                 if(npc.GetComponent<Enemy>()!=null)
                     npcAlignment.Add(true);
                 else
@@ -52,6 +55,10 @@ public class CrowdHandler : MonoBehaviour
                 i++;
                 npcList.Add(npc);
             }
+        }
+
+        foreach(GameObject enemy in intermediateEnemyList){
+            capsuleDiameterEnemies.Add(enemy.GetComponent<CapsuleCollider>().radius*2);
         }
 
         updatesPerFrame = npcUpdatesPerFrame;
@@ -72,8 +79,8 @@ public class CrowdHandler : MonoBehaviour
             StartCoroutine(ResetCrowdHandler());
         }else if(setupDone){
             doPlayerStrafing();
-            foreach(Transform t in enemyList){
-                doEnemyStrafing(t);
+            for(int i = 0; i<enemyList.Count;i++){
+                doEnemyStrafing(i);
             }
             for(int i = 0; i<updatesPerFrame;i++){
                 doNPCStrafing();
@@ -84,7 +91,7 @@ public class CrowdHandler : MonoBehaviour
     void doPlayerStrafing(){
         for(int i = 0; i<npcList.Count;i++){
             float magnitude = (transform.position-npcList[i].transform.position).sqrMagnitude;
-            if(!(npcAlignment[i])&&magnitude<=personalSpace+capsuleDiameter[i]){
+            if(!(npcAlignment[i])&&magnitude<=personalSpace+capsuleDiameterNPCs[i]){
                 if (transform.InverseTransformPoint(npcList[i].transform.position).x > 0)
                 {
                     npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,transform,magnitude,(player.GetSpeed())));
@@ -95,16 +102,33 @@ public class CrowdHandler : MonoBehaviour
         }
     }
 
-    void doEnemyStrafing(Transform npcTransform){
+    void doEnemyStrafing(int num){
         for(int i = 0; i<npcList.Count;i++){
-            float magnitude = (npcTransform.position-npcList[i].transform.position).sqrMagnitude;
-            bool ignore = (npcList[ptr].GetComponent<Pathfinding>()==null||npcList[ptr].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&npcList[i].GetComponent<Pathfinding>()!=null;
-            if(!ignore&&magnitude<=personalSpace+capsuleDiameter[i]){
-                if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
+            float magnitude = (enemyList[num].position-npcList[i].transform.position).sqrMagnitude;
+            bool ignore = (enemyList[num].GetComponent<Pathfinding>()==null||enemyList[num].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&npcList[i].GetComponent<Pathfinding>()!=null;
+            if(!ignore&&magnitude<=personalSpace+capsuleDiameterNPCs[i]){
+                if (enemyList[num].InverseTransformPoint(npcList[i].transform.position).x > 0)
                 {
-                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f,2.5f));
+                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,enemyList[num],3.5f,2.5f));
                 }else{
-                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,npcTransform,3.5f,2.5f));
+                    npcList[i].SendMessage("DoStrafe",new StrafeInfo(false,enemyList[num],3.5f,2.5f));
+                }
+            }
+        }
+
+        if(!allowInterEnemyStrafe)
+            return;
+        for(int j = 0;j<enemyList.Count;j++){
+            if(j==num)
+                continue;
+            float magnitude = (enemyList[num].position-enemyList[j].transform.position).sqrMagnitude;
+            bool ignore = (enemyList[num].GetComponent<Pathfinding>()==null||enemyList[num].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&enemyList[j].GetComponent<Pathfinding>()!=null;
+            if(!ignore&&magnitude<=personalSpace+capsuleDiameterEnemies[j]){
+                if (enemyList[num].InverseTransformPoint(enemyList[j].transform.position).x > 0)
+                {
+                    enemyList[j].SendMessage("DoStrafe",new StrafeInfo(true,enemyList[num],3.5f,2.5f));
+                }else{
+                    enemyList[j].SendMessage("DoStrafe",new StrafeInfo(false,enemyList[num],3.5f,2.5f));
                 }
             }
         }
@@ -115,7 +139,7 @@ public class CrowdHandler : MonoBehaviour
             Transform npcTransform = npcList[ptr].transform;
             float magnitude = (npcTransform.position-npcList[i].transform.position).sqrMagnitude;
             bool ignore = (npcList[ptr].GetComponent<Pathfinding>()==null||npcList[ptr].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Stationary)&&npcList[i].GetComponent<Pathfinding>()!=null&&(npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Patrol||npcList[i].GetComponent<Pathfinding>().behaviour==Pathfinding.Behaviour.Move);
-            if(ptr!=i&&!ignore&&magnitude<=personalSpace+capsuleDiameter[i]){
+            if(ptr!=i&&!ignore&&magnitude<=personalSpace+capsuleDiameterNPCs[i]){
                 if (npcTransform.InverseTransformPoint(npcList[i].transform.position).x > 0)
                 {
                     npcList[i].SendMessage("DoStrafe",new StrafeInfo(true,npcTransform,3.5f,2.5f));

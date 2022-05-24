@@ -41,7 +41,7 @@ public class Pathfinding : MonoBehaviour
     }
 
     void HandlePatrol(){
-        if (!agent.hasPath) {
+        if (!agent.hasPath||agent.remainingDistance<=.6f) {
             agent.destination = waypoints[Random.Range(0, waypoints.Count)].transform.position;
         }
     }
