@@ -6,29 +6,39 @@ public class Strafe : MonoBehaviour
 {
     [Header("Optional Field")]
     [SerializeField] private float resetDistance = -1.0f;
-    bool isStrafe = false;
     Transform rotationHandler;
+    Pathfinding path;
 
     public void Start(){
         if(resetDistance==-1.0f)
             resetDistance = GameObject.Find("Player").GetComponent<CrowdHandler>().GetPersonalSpace()+GetComponent<CapsuleCollider>().radius*2;
         rotationHandler = GameObject.Find("RotationHandler").GetComponent<Transform>();
+        path = GetComponent<Pathfinding>();
     }
 
     public void DoStrafe(StrafeInfo info){
-        if(isStrafe){
+        UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if((transform.position-info.source.position).sqrMagnitude>=resetDistance){
+            agent.velocity = Vector3.zero;
             return;
         }
-        isStrafe = true;
-        UnityEngine.AI.NavMeshAgent agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+        path.SetNPCPushing();
         rotationHandler.forward = info.source.right;
         if(!info.isRight){
             rotationHandler.Rotate(0, 180.0f, 0, Space.Self);
         }
+        agent.destination = path.GetResetVec();
+        if(info.source.name=="Player"){
+            Debug.Log(name + " - 1 - " + agent.velocity + " POWER: " + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)));
+        }
         agent.velocity = Vector3.ClampMagnitude(agent.velocity + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)),3.5f);
-        isStrafe=false;
+        if(info.source.name=="Player"){
+            Debug.Log(name + " - 2 - " + agent.velocity);
+        }
+    }
 
-        if((transform.position-info.source.position).sqrMagnitude>=resetDistance)
-            agent.velocity = Vector3.zero;
+    public float GetResetDistance(){
+        return resetDistance;
     }
 }

@@ -160,6 +160,10 @@ public class CrowdHandler : MonoBehaviour
     public float GetPersonalSpace(){
         return personalSpace;
     }
+
+    public List<GameObject> getNPCList(){
+        return npcList;
+    }
 }
 
 public class StrafeInfo{
