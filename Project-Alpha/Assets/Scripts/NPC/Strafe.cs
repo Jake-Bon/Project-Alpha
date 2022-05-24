@@ -30,7 +30,7 @@ public class Strafe : MonoBehaviour
         }
         agent.destination = path.GetResetVec();
         if(info.source.name=="Player"){
-            Debug.Log(name + " - 1 - " + agent.velocity + " POWER: " + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)));
+            Debug.Log(name + " - 1 - " + agent.velocity + " POWER: " + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)) + " CLAMPED: " + Vector3.ClampMagnitude(rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)),3.5f) + " FULL CLAMP: " + Vector3.ClampMagnitude(agent.velocity + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)),3.5f));
         }
         agent.velocity = Vector3.ClampMagnitude(agent.velocity + rotationHandler.forward.normalized*(info.speed/3)*((resetDistance-info.magnitude)*(resetDistance-info.magnitude)),3.5f);
         if(info.source.name=="Player"){
