@@ -3166,7 +3166,6 @@ GameObject:
   - component: {fileID: 1139858831}
   - component: {fileID: 1139858830}
   - component: {fileID: 1139858829}
-  - component: {fileID: 1139858828}
   - component: {fileID: 1139858827}
   m_Layer: 0
   m_Name: Main Camera
@@ -3187,24 +3186,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433faa8b758afed4f9295b193c697276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorDepth: {x: 64, y: 64, z: 64}
-  ditherDepth: {x: 8, y: 8, z: 8}
-  ditheringMatrixSize: 1
+  colorDepth: {x: 8, y: 8, z: 8}
+  ditherDepth: {x: 4, y: 4, z: 4}
+  ditheringMatrixSize: 0
   framerateLimit: 60
   _Shader: {fileID: 4800000, guid: 364a79f75940cde409d6c07092dacd71, type: 3}
---- !u!114 &1139858828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139858826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d1e256ffebac9442aee1bb0c551ef70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bias: 15
 --- !u!114 &1139858829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4394,6 +4380,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: db83534bf227821408ca3120d9dc0d47, type: 3}
       propertyPath: m_Name
       value: Johnson smooth
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: db83534bf227821408ca3120d9dc0d47, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db83534bf227821408ca3120d9dc0d47, type: 3}
